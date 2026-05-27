@@ -1,0 +1,854 @@
+---
+title: "Module01"
+author: "Caterina"
+date: "2026-05-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Add a New Chunk 
+option + command + i 
+
+```{r}
+install.packages("tidyverse")
+library(tidyverse)
+```
+#Workshop 1
+```{r}
+#-------------------------------------------#
+#MB5370: Introduction to Programming 
+#Caterina Palma 
+#May 2026 
+
+#Path to find Rscript --> ~/Documents/University 2026/Trimester 2/MB5370 Techniques in Marine Science/R Scripts/Module_01.R 
+#-------------------------------------------# 
+
+#-------------------------------------------# 
+#Workshop 01. Introduction ##### 
+
+#####1.3.7 Getting Started#####
+
+2+1
+
+#Using : runs a sequence of numbers from 1 to 30. 
+1:30
+
+#####1.3.8 Variables & Assessment##### 
+#This section focuses on understanding how data is stored in R and why that matters. 
+
+#The symbol <- in R assigns value to an object, known as "assignment operator". 
+#Assigning two objects in my script. You can see it goes into the 'Environment' box on the top right. 
+
+age <- 25 
+first_name <- 'Bill'
+
+#Then using these assigned objects... 
+
+age + 1
+age + age 
+
+#Exercise to test my knowledge and see if R works 
+#Using R to calculate the sum of numbers then assigning a name to the result. 
+#Then making another object with a number and calling it another name and adding them together. 
+
+15+25.1+20.25 
+'math' <- 15+25.1+20.25 
+'numbers' <- 14
+
+math + numbers 
+
+#####1.3.9 Functions#####
+
+#R has lots of built-in functions e.g. 'round' and 'floor'. 
+
+years_old <- 25.7
+round(years_old) #rounds up 
+floor (years_old) #rounds down 
+
+#We can also specify how many decimal places I want the number rounded to. 
+years_old <- 25.765
+round(years_old,2) #comma after the object to specify round to 2 decimal points. 
+round(years_old,1) #comma after the object to specify round to 1 decimal point. 
+
+#You can use R to get help for what each function means 
+?round #use this to get help. 
+
+args(round) # args() tells us what the function is expecting us to give it.
+#in this case, it's telling us that 'round' is a function that expects us to give it a number and a digit that we want the number to be rounded up to. 
+
+?paste #checking what the 'paste' function does. 
+
+#The below is a function to make a sentence using multiple functions. 
+#first give years_old a number, then use paste to get R to paste the sentence "Caterina is"... 
+
+years_old <- 25.765
+Caterina_age <- paste("Caterina is",years_old)
+Caterina_age
+
+age <- 25 
+first_name <- 'Bill'
+age + 1
+age + age 
+15+25.1+20.25
+15+25.1+20.25 <- 'math'
+#Error in 15 + 25.1 + 20.25 <- "math" : 
+
+'math' <- 15+25.1+20.25 
+'numbers' <- 14
+math + numbers 
+years_old <- 25.7
+round(years_old) #rounds up 
+floor (years_old) #rounds down 
+#We can also specify how many decimal places I want the number rounded to. 
+years_old <- 25.765
+round(years_old,2) #comma after the object to specify argument 
+round(years_old,1)
+
+?round
+args(round)
+
+?paste
+Caterina_age <- 29
+Caterina_age <- "Caterina is 29 years old" 
+years_old <- 25.765
+
+Caterina_age <- paste("Caterina is",years_old)
+#Results Caterina_age [1] "Caterina is 25.765"
+
+#####1.3.10 Debugging##### 
+#Misconceptions - variables in programs do not work the same way as they do in spreadsheets 
+
+grade <- 55
+total <- grade +10
+print(total)
+grade <- 90
+print(total)
+#value of total in spreadsheet will be 100, but in programming a variable holds the value it was assigned, which was 65. 
+#so to get it up to speed we will need to do the below... 
+
+total <- grade +10 
+print(total)
+#now the total will be 100. 
+
+#Debugging depends on being able to read your code, this is the most effective way of finding errors. 
+#here we learn to read code by prediting its behaviour before we run it. 
+
+p<- 2 
+z<- 5
+out <- p*z
+print(out)
+#RESULT = 10 
+
+#We can ask R if the item we gave them, e.g. x, is a character or if its numeric. 
+x<- 1
+is.character(x)
+is.numeric(x)
+
+#Exercise: What's wrong with this code? 
+
+my_quiz <- c("uno", "dos", "tres", "cuatro", "cinco")
+print(my_quiz)
+str(my_quiz)
+len(my_quiz) #len is not a function, it was supposed to be "length" - we can check this by using the 'Help' on bottom right-hand side
+#by starting to type len in, and see what comes up. 
+
+#####1.3.11 Data Types##### 
+
+#There are six basic data types: 
+#character, numeric, integer, logical, complex, and raw. We will only use the first 4. 
+
+#R (and other programming languages) have built-in functions to help examine objects to better understand their type, for instance: 
+#class() = what kind of object it is (high-level)? 
+#typeof() = what is the object's data type? 
+#length() = how long is it? 
+#attributes() = does it have metadata? 
+
+#Exercise 
+my_numeric_variable <- 4.2
+class(my_numeric_variable) #RESULT = numeric, because variable is a number. 
+typeof(my_numeric_variable) #RESULT = double - unsure of what this means. 
+length(my_numeric_variable) #RESULT = 1, because there is one variable. 
+attributes(my_numeric_variable) #RESULTS = NULL 
+
+#####1.3.12 Data Structures##### 
+#We has a hint early on in this workshop that there are different structures. Remember when we looked at this list... 
+#list("uno", "dos"...)
+#Elements of the data types can be combined to form a data structure. Think of elements as what you would put in a single cell in excel, with the whole spreadsheet the data structure. 
+
+#R has many data structures, they include: 
+#atomic vector, list, matrix, data frame, factors. 
+
+#Vector is the most common. It is a collection of elements that are most commonly of the type character, numeric, integer, and logical. 
+#We will make a vector with three numeric elements in it: 
+
+y <- c(1, 2, 3) 
+
+#OR a vector full of character elements: 
+
+z <- c("Sarah", "Tracy", "Jon") 
+
+#Exercise: 
+
+class(z) #tells us the vector are characters. 
+class(y) #tells us the vector are numbers. 
+
+#There are also lists. Unlike vectors, values inside lists can be of several different types. 
+
+x <- list(1, "a", TRUE) #the list has a number, a character, and a logical data type. 
+x #this outputs each variable on a separate line. 
+
+#####1.3.13 Data frames and tibbles##### 
+
+#Rows and Columns like excel. Each column hols elements of the same type, meaning that data in each cell in a column of a data frame need to be the same type.
+#We can import a data frame from an external file such as .csv, or.xlsx. 
+#The function data.frame lets you make them by adding together different vectors and giving each one a column name. 
+
+my_dataframe <- data.frame (no =c(1,2,3), c("tracy","jon","pete"), c(TRUE, FALSE, TRUE))
+my_dataframe
+str(my_dataframe)
+
+#R guesses the type of each column. Sometimes it gets it wrong, so it's good get into the habit of checking and changing if necessary... 
+
+my_dataframe$no = as.factor(my_dataframe$no)
+str(my_dataframe)
+#It is important that each vector is the same length (number of rows) because R won't allow you to have different columns with different lengths. 
+#This is where you can use NA in a data with no data. 
+
+#####1.3.14 Packages & Libraries##### 
+
+#Downloading R packages. 
+
+install.packages("tidyverse") #download and install. 
+library(tidyverse) #load into current workspace. 
+
+#now its downloaded and installed, its best to # it so it doesn't download and install every time you run the script. 
+
+#Now lets run a simple function from the package you installed and loaded above, ggplot2. 
+#library(ggplot2)
+
+?ggplot2 #to learn about the package. 
+
+#####1.3.15 Coding best practices##### 
+
+#Loading packages 
+
+#library(gglot2)
+#library(tidyr)
+#library(tidyverse)
+```
+
+#2.16 Load Packages and Data 
+
+```{r}
+install.packages("knitr")
+library(knitr)
+mpg
+```
+
+```{r}
+?mpg
+```
+
+# 2.18.1 Understanding the 'grammar of graphics' 
+This is the template to build a graph... 
+
+ggplot(data = <YOUR_DATA>) +
+<GEOM_FUNCTION>(mapping = aes(<YOUR_MAPPINGS>)) 
+
+# 2.17 Create the first ggplot2
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+# 2.18.2 Asthetics Mappings - making the graph pretty 
+Now the points on the graph are colour coordinated depending on car class. 
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = class))
+```
+
+BUT... instead of coordinating by class, we can do it by size... 
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, size = class))
+```
+This isn't a great looking graph, can't really see the sizes of the points. 
+So, we are going to change the class to alpha and see what that looks like... 
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, alpha = class))
+```
+You also arent really able to see the difference between class of car. 
+So, we try something different. We will try shape. 
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, shape = class))
+```
+This also doesn't work very well because the program can only do a maximum of 6 different shapes, and we have 7. 
+
+Now we will ask R to make the points on the graph all blue. Remember, the code looks different, be careful. 
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy), colour = "blue")
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = displ < 5))
+```
+HERE we keep the colour in the big brackets because we are changing information within the aesthetics, rather than the whole graph. 
+
+# 2.19 Troubleshooting 
+Be careful when you're typing code, the placement of specific numbers of letters etc. matter. E.g. 
+```{r}
+ggplot(data = mpg) 
+ + geom_point(mapping = aes(x = displ, y = hwy, colour = displ < 5))
+```
+
+The above doesn't work, because the + symbol is in the wrong place. 
+
+# 2.20 Facet and Panel Plots 
+This creates separate plots or subplots - these are called facets. 
+We use the function, facet_wrap(). But, we can only use facet_wrap() for discrete variables. 
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_wrap(~class, nrow = 2)
+```
+We will now use facet_grid if we want to use more than one variable, using ~ to split them. 
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ cyl)
+```
+We will now only split into 1 variable. To do this, we use full stop. 
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = drv)) +
+  facet_grid(. ~ cyl)
+```
+Read facet_wrap using below code. 
+
+```{r}
+?facet_wrap
+```
+
+# 2.21 Fitting Simple Lines 
+ggplot can use a variety of visual objects to represent our data. To display data as points, use geom_point(). 
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+HOWEVER< ggplot2 can use a variety of geom objects to represent the data. 
+We might want to use bar plots, line charts, boxplots etc. We will now plot a smooth line. 
+
+```{r}
+ggplot(data = mpg) +
+  #geom_point(mapping = aes(x = displ, y = hwy)) # points not as cute. 
+  geom_smooth(mapping = aes(x = displ, y = hwy), colour = "red") #smooth line is nice. 
+```
+We can also change the line type. 
+
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv), colour = "blue")
+```
+And then we can change the colour of the line by adding colour = drv. 
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv, colour = drv))
+```
+Now, we will group the categories using the group aesthetic. 
+
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, group = drv))
+```
+All the lines are the same colour (blue), but we can change the colour based on drv value. 
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, colour = drv), 
+              show.legend = FALSE,)
+```
+We will now increase complexity, by plotting multiple geoms on a single plot, by adding them together. 
+
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy), colour = "black") +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = drv))
+```
+In the above code, we had to duplicate the line, to save time, we can do the below code. 
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_smooth()
+```
+Use mappings in specific layers to enable the display of different aesthetics in different layers. 
+This is not styled by class, but you can style the points by themselves... 
+So, this makes the points coloured. 
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point(mapping = aes(colour = class)) +
+  geom_smooth()
+```
+The same goes if you want to specify different data for each layer. We will now use a filter (class = "subcompact") to select a subject of the data and plot only that subset. 
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point(mapping = aes(colour = class)) +
+  geom_smooth(data = filter(mpg, class == "subcompact"), se = FALSE)
+```
+This was a test to our knowledge, to see what graphs would be made using both the below code. 
+It creates the same graph. 
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+geom_point() +
+geom_smooth()
+
+ggplot() +
+geom_point(data = mpg, mapping = aes(x = displ, y = hwy)) +
+geom_smooth(data = mpg, mapping = aes(x = displ, y = hwy))
+```
+
+# 2.22.1 Transformations and Stats - Using Diamonds 
+
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut))
+```
+You can see that we didn't add count into the variables, because there is no variable for count. But, R will count all the entries by itself, via geom_bar. Although, we can use stat_count interchangeably with geom_bar - it does the same thing. 
+The main reson for this is because every geom has a default stat and every stat has a default geom. 
+```{r}
+ggplot(data = diamonds) + 
+  stat_count(mapping = aes(x = cut))
+```
+
+# 2.22.2 Overriding Defaults in ggplot2 
+
+```{r}
+demo <- tribble(
+  ~cut, ~freq,
+  "Fair", 1610, 
+  "Good", 4906,
+  "Very Good", 12082, 
+  "Premium", 13791, 
+  "Ideal", 21551)
+demo 
+
+ggplot(data = demo) + 
+  geom_bar(mapping = aes(x = cut, y = freq), stat = "identity")
+```
+Here we are overriding mapping from transformed variables to aesthetics. 
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, y = after_stat(prop), group = 1))
+```
+
+# 2.22.3 Plotting Statistic Details 
+
+This is to show a little more about the transformed variables to aesthetics. 
+E.g. we can display a bar chart of the proportion of the total diamond dataset rather than count. 
+
+```{r}
+ggplot(data = diamonds) + 
+  stat_summary(
+    mapping = aes(x = cut, y = depth), 
+    fun.min = min, 
+    fun.max = max, 
+    fun = median
+  )
+```
+
+# 2.23 Aesthic Adjustments 
+Changing aesthetics like colour and fill in the charts! 
+
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, colour = cut))
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = cut))
+```
+Now using aesthetics to colour by another variable... clarity. Notice how stacking is done automatically. 
+This is done behind the scenes with a position argument. 
+
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity))
+```
+The ability to make position adjustments is vital, it allows to customise plots in three ways, identity (raw data), fill (changes heights), and dodge (which forces ggplot2 to not put things on top of each other). 
+
+Using 'position = "identity"' enable us to place each object exactly where it falls in the context of the graph. It is vital for point charts like scatter plots but makes a mess in a bar plot situation. 
+
+```{r}
+#To alter transperency (alpha)
+ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity)) + 
+  geom_bar(alpha = 1/5, position = "identity")
+```
+
+```{r}
+# To colour the bar outlines with no fill colour. 
+ggplot(data = diamonds, mapping = aes(x = cut, colour = clarity)) +
+  geom_bar(fill = NA, position = "identity")
+```
+The position "fill" works like stacking, but makes each set of stacked bars the same height. 
+
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill") 
+```
+The position "dodge" places overlapping objects directly beside one another. 
+
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge") 
+```
+The position "jitter" slightly moves points so you can see them all. 
+
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "jitter") 
+```
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy), position = "jitter") 
+```
+
+# 2.24 The Layered Grammer of Graphics 
+Template for making a ggplot. 
+
+```{r}
+#ggplot(data = <DATA>) + 
+#  <GEOM_FUNCTION>(
+#    mapping = aes(<MAPPINGS>), 
+#    stat = <STAT>, 
+#    position = <POSITION>
+#  ) + 
+#  <FACET_FUNCTION> 
+```
+
+#### WORKSHOP 3 ##### 
+
+# 3.1.1 Learning about for-loops 
+
+R & all programming languages have a range of 'control structures that allow you to control the flow of execution of code. 
+A primitive way of doing this is with loops. Repeat a task on your data. Code looks like... 
+
+"for (value in that) {
+this 
+}"
+
+```{r}
+for (value in c("My", "first", "for", "loop")){
+  print("one run")
+}
+```
+The above printed what we put in the brackets after print i.e. "one run". 
+
+```{r}
+for (value in c("My", "second", "for", "loop")){
+  print(value)
+}
+```
+But, when we put any word, for example 'value' in the top line, when we ask to print 'value', R will print the words on the first line, as we have asked. Examples are below and above. 
+
+```{r}
+for (word in c("My", "second", "for", "loop")){
+  print(word)
+}
+```
+We only get an output from our loop because of the 'print' function. If you look to the environment box (top right) you will see the words 'value' and 'word' are loops. 
+
+We will now make our own fully custom for-loop. 
+
+First - we make the object we want to loop through. Here we use a numeric vector, but it will also work with a list (we'll call it a 'list' because it helps imagine it). Print it so you know what it is: note that it's a numeric vector data structure that holds 50 numbers, which is every number from 1 to 50. 
+
+```{r}
+my_list <- 1:50
+print(my_list) 
+str(my_list)
+```
+str() function compactly displays the internal structure of an object. 
+
+Now, we make a new for-loop for a custom purpose. We can think about it as "for each item on my list, do something to that item". 
+Here we want to access the first item, print it out, and then go on to the next item. 
+
+i is what programmers normally use for this purpose (standing for iteration), but you can use any letter or term you like, as long as you call it again inside the for-loop. 
+
+The code will enter into a loop (defined by the curly brackets) then run round and round the loop for however many times your for-loop is looping over. This one runs 50 times, goes to number 1, prints it, goes to number 2, prints it, and so on... 
+
+```{r}
+#make a for-loop 
+for(i in my_list){
+  result <- i 
+  out <- paste0("I am printing loop number: ",i,".") #output: 1 loop 
+  print(out)
+  #Sys.sleep(0.5) #slow it down for example purposes
+}
+
+print("For loop complete!")
+print("Program complete!")
+```
+Now we increase the complexity a little. Here we want to add a number constant to every item in the list
+
+```{r}
+add_me <- 500
+for(i in my_list){
+  result <- i + add_me #add to the i value 
+  out <- paste0("Result of iteration: ",i,"=", result, ".")
+  print(out)
+  #Sys.sleep(0.5) #comment out to show just how fast R is. 
+}
+
+print("For loop complete!")
+print("Program complete!")
+```
+Now, imagine if you had something very complex to do, like take a data file, extract a value from it, add it to another one and so on. Using this type of functionality of programming language, iterating with little or no input, will ultimately allow you to do incredible things to your data or files. 
+
+Nested for-loop. 
+```{r}
+#Note we have i and j for each loop 
+for(i in c(1, 2, 3, 4, 5)) {
+  print (paste ("I am base loop number: ",i))
+  #Sys.sleep(0.8) #slow it down for example purposes 
+  for (j in c(1, 2, 3)){
+    print (paste ("...I am inside loop number: ",j))
+    #Sys.sleep(0.8) # slow it down for example purposes
+  }
+}
+```
+I will now make my own for-loop. 
+
+```{r}
+my_animal_list <- 1:3
+print(my_animal_list) 
+```
+
+```{r}
+animals <- c("cat", "whale", "shark")
+```
+
+```{r}
+for(a in my_animal_list){
+  out <- paste("My number",a,"favourite animal is a", animals[a],".")
+  print(out)
+  }
+```
+
+# 3.1.2 if and if else statements 
+
+if (no_milk){
+buy_milk
+}
+
+First we tell the code that x is 1. Then we say, if x is 1 then x is 2. Similar to the example above, that says is there is no milk, buy milk. So, now R knows that x is 2. 
+```{r}
+x <- 1 
+x #what is x? 
+if (x == 1) {
+  x <- 2
+  x #what is x now? 
+}
+```
+The below checks to see what x is. We're asking does x = 1 or does x = 2, and we get a TRUE or FALSE answer. 
+
+```{r}
+x == 1
+```
+FALSE
+
+```{r}
+x == 2
+```
+TRUE 
+
+Sometimes, we want to do something when we don't meet a certain case. A marine example of this is to format tracking tag data if there is some data received, but skip the file if no data is received (e.g. the animal is underwater). Here we use the "ifelse" statement, which allows you to start a second set of commands if the first condition is not met. 
+
+The code: 
+
+```{r}
+if(animal_data_receieved){
+  #1. save statement in log file that the animal has been updated
+} else {
+  #1. save statment saying no data receieved
+}
+```
+
+In addition, there is an "elseif" statement which allows you to fit in additional conditions between "if" and "else", enabling you to chain together a range of different cases for your program to move through and do certain things. 
+
+Exercise 
+
+```{r}
+name <- "Caterina"
+if (name == "Caterina") {
+  last.name <- "Palma"
+}
+print(paste(name, last.name))
+```
+
+try changing name to Bob, what happens? 
+
+```{r}
+name <- "Bob"
+if (name == "Caterina") {
+  last.name <- "Palma"
+}
+print(paste(name, last.name))
+```
+
+When I change the first name <- Bob, it works. When i change the second name Bob, it doesnt. 
+
+```{r}
+name <- "Caterina"
+if (name == "Bob") {
+  last.name <- "Palma"
+}
+print(paste(name, last.name))
+```
+
+Now we use else... 
+
+```{r}
+name <- "Bob"
+if (name == "Caterina") {
+  last.name <- "Palma"
+} else {
+  last.name <- "Smith"
+}
+print(paste(name, last.name))
+```
+The above is saying, when the name is Caterina, then the last name is Palma, but if the name is anything else then the last name is Smith. 
+
+```{r}
+name <- "Jim"
+if (name == "Caterina") {
+  last.name <- "Palma"
+} else if (name == "Bob") {
+  last.name <- "Jones"
+} else {
+  last.name <- "... last name is unknown"
+}
+print(paste(name, last.name))
+```
+
+The above is saying, if Caterina is Palma, and Bob is Jones, then Jim is ...last name unknown. 
+
+# 3.1.3 Functions 
+
+We just got introduced to control structures such as "if else" statements and "for loops". 
+But, if we want to do the same thing over and over again in our script, we use a FUNCTION! 
+It makes everything shorter and neater, and saves us from writing long code over and over. 
+
+Let's use a classic problem of wanting to convert temperature. To calculate celcuis from fahrenheit, it's a simple equation. 
+
+```{r}
+#temp_c <- (temp_F -32)* 5/9
+```
+
+If we want to calculate temperature in celcuis of two places, one which is 100F and the other which is 200F, I could write... 
+
+```{r}
+temp_C <-(100 - 32) * 5/9 
+temp_C <-(200 - 32) * 5/9 
+```
+
+The number comes up in our environment box (top right-hand corner). 
+
+BUT, what if we have a data file where we need to repeatedly make this conversion over hundreds or thousands of sites? Having to include the full equation every time makes for a lot of writing, a big chance of accidently including an error, and difficult to read script. 
+
+Here, we can turn this into a function... 
+
+```{r}
+fahrenheit_to_celsuis <- function(temp_F) {
+  temp_C <- (temp_F - 32) *5/9 
+  return(temp_C)
+}
+```
+
+The function is called "fahrenheit_to_celcuis", and is defined by assigning the output of 'function'. The list of argument names are contained within parentheses. Arguments are the object we want our function to operate on. In this case, it will be a number which represents temperature in fahrenheit (temp_F). 
+
+Next, the 'body' of the function, which is the code that will be executed when the function is run, is contained within curly brackets. The return function gives us back the result. 
+
+```{r}
+fahrenheit_to_celsuis <- function(temp_F) {
+  #convert F to C
+  temp_C <- (temp_F - 32) *5/9 
+  return(temp_C)
+}
+```
+
+Adding in the # to comment. 
+
+We use the function name "fehrenheit_to_celsuis()" putting a number in the brackets, and R provides us with the answer using the equation we put in the function when we made it earlier/above. 
+
+```{r}
+fahrenheit_to_celsuis(100) 
+```
+
+```{r}
+fahrenheit_to_celsuis(200) 
+```
+
+As we change the number of fahrenheit in the (), the value of temp_C changes, you can see this in the environment box (top right-hand corner). This saves a lot of space with the script. 
+Using functions for repeated tasks can dramatically improve your coding style and lead to readable, easy to understand code. 
+
+Exercise - Write a function that converts Celsuis to Fahrenheit... 
+
+```{r}
+celsuis_to_fahrenheit <- function(temp_C) {
+  #convert C to F
+  temp_F <- (temp_C * 9/5) + 32
+  return(temp_F)
+}
+```
+
+Now to test... 
+
+```{r}
+celsuis_to_fahrenheit(40)
+```
+
+# 3.1.5 Importing and Saving Data 
+
+You can download your own data into R as a data frame very easily. 
+Generally, we prefer data to be in a comma separated file (.csv) rather than excel (.xls) because .csv's are plain text files that are well structured and easy for R to deal with. 
+
+RStudio has drop down menus and methods to import data into an R session. However, we'll hard-code these types of actions using the base function read.csv, so that it's easier to re-run your script in the future. 
+
+Saving a data frame back to a .csv once you've developed it, simply use write.csv. 
+
+# 3.1.6 Which programming language should I learn? Python vs. R 
+This is to show that programming languages are very similar. 
+
+```{r}
+R.version.string
+#> [1] "R version 4.5.1 (2025-06-13)"
+
+update.packages(ask = FALSE, checkBuilt = TRUE)
+```
+
+```{r}
+source("Class_1.R")
+```
+
+
+
+
+
+
+
+
+
+
