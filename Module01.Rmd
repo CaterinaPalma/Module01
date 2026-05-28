@@ -13,237 +13,14 @@ knitr::opts_chunk$set(echo = TRUE)
 option + command + i 
 
 ```{r}
-install.packages("tidyverse")
+#install.packages("tidyverse")
 library(tidyverse)
+library(rmarkdown)
 ```
-#Workshop 1
-```{r}
-#-------------------------------------------#
-#MB5370: Introduction to Programming 
-#Caterina Palma 
-#May 2026 
-
-#Path to find Rscript --> ~/Documents/University 2026/Trimester 2/MB5370 Techniques in Marine Science/R Scripts/Module_01.R 
-#-------------------------------------------# 
-
-#-------------------------------------------# 
-#Workshop 01. Introduction ##### 
-
-#####1.3.7 Getting Started#####
-
-2+1
-
-#Using : runs a sequence of numbers from 1 to 30. 
-1:30
-
-#####1.3.8 Variables & Assessment##### 
-#This section focuses on understanding how data is stored in R and why that matters. 
-
-#The symbol <- in R assigns value to an object, known as "assignment operator". 
-#Assigning two objects in my script. You can see it goes into the 'Environment' box on the top right. 
-
-age <- 25 
-first_name <- 'Bill'
-
-#Then using these assigned objects... 
-
-age + 1
-age + age 
-
-#Exercise to test my knowledge and see if R works 
-#Using R to calculate the sum of numbers then assigning a name to the result. 
-#Then making another object with a number and calling it another name and adding them together. 
-
-15+25.1+20.25 
-'math' <- 15+25.1+20.25 
-'numbers' <- 14
-
-math + numbers 
-
-#####1.3.9 Functions#####
-
-#R has lots of built-in functions e.g. 'round' and 'floor'. 
-
-years_old <- 25.7
-round(years_old) #rounds up 
-floor (years_old) #rounds down 
-
-#We can also specify how many decimal places I want the number rounded to. 
-years_old <- 25.765
-round(years_old,2) #comma after the object to specify round to 2 decimal points. 
-round(years_old,1) #comma after the object to specify round to 1 decimal point. 
-
-#You can use R to get help for what each function means 
-?round #use this to get help. 
-
-args(round) # args() tells us what the function is expecting us to give it.
-#in this case, it's telling us that 'round' is a function that expects us to give it a number and a digit that we want the number to be rounded up to. 
-
-?paste #checking what the 'paste' function does. 
-
-#The below is a function to make a sentence using multiple functions. 
-#first give years_old a number, then use paste to get R to paste the sentence "Caterina is"... 
-
-years_old <- 25.765
-Caterina_age <- paste("Caterina is",years_old)
-Caterina_age
-
-age <- 25 
-first_name <- 'Bill'
-age + 1
-age + age 
-15+25.1+20.25
-15+25.1+20.25 <- 'math'
-#Error in 15 + 25.1 + 20.25 <- "math" : 
-
-'math' <- 15+25.1+20.25 
-'numbers' <- 14
-math + numbers 
-years_old <- 25.7
-round(years_old) #rounds up 
-floor (years_old) #rounds down 
-#We can also specify how many decimal places I want the number rounded to. 
-years_old <- 25.765
-round(years_old,2) #comma after the object to specify argument 
-round(years_old,1)
-
-?round
-args(round)
-
-?paste
-Caterina_age <- 29
-Caterina_age <- "Caterina is 29 years old" 
-years_old <- 25.765
-
-Caterina_age <- paste("Caterina is",years_old)
-#Results Caterina_age [1] "Caterina is 25.765"
-
-#####1.3.10 Debugging##### 
-#Misconceptions - variables in programs do not work the same way as they do in spreadsheets 
-
-grade <- 55
-total <- grade +10
-print(total)
-grade <- 90
-print(total)
-#value of total in spreadsheet will be 100, but in programming a variable holds the value it was assigned, which was 65. 
-#so to get it up to speed we will need to do the below... 
-
-total <- grade +10 
-print(total)
-#now the total will be 100. 
-
-#Debugging depends on being able to read your code, this is the most effective way of finding errors. 
-#here we learn to read code by prediting its behaviour before we run it. 
-
-p<- 2 
-z<- 5
-out <- p*z
-print(out)
-#RESULT = 10 
-
-#We can ask R if the item we gave them, e.g. x, is a character or if its numeric. 
-x<- 1
-is.character(x)
-is.numeric(x)
-
-#Exercise: What's wrong with this code? 
-
-my_quiz <- c("uno", "dos", "tres", "cuatro", "cinco")
-print(my_quiz)
-str(my_quiz)
-len(my_quiz) #len is not a function, it was supposed to be "length" - we can check this by using the 'Help' on bottom right-hand side
-#by starting to type len in, and see what comes up. 
-
-#####1.3.11 Data Types##### 
-
-#There are six basic data types: 
-#character, numeric, integer, logical, complex, and raw. We will only use the first 4. 
-
-#R (and other programming languages) have built-in functions to help examine objects to better understand their type, for instance: 
-#class() = what kind of object it is (high-level)? 
-#typeof() = what is the object's data type? 
-#length() = how long is it? 
-#attributes() = does it have metadata? 
-
-#Exercise 
-my_numeric_variable <- 4.2
-class(my_numeric_variable) #RESULT = numeric, because variable is a number. 
-typeof(my_numeric_variable) #RESULT = double - unsure of what this means. 
-length(my_numeric_variable) #RESULT = 1, because there is one variable. 
-attributes(my_numeric_variable) #RESULTS = NULL 
-
-#####1.3.12 Data Structures##### 
-#We has a hint early on in this workshop that there are different structures. Remember when we looked at this list... 
-#list("uno", "dos"...)
-#Elements of the data types can be combined to form a data structure. Think of elements as what you would put in a single cell in excel, with the whole spreadsheet the data structure. 
-
-#R has many data structures, they include: 
-#atomic vector, list, matrix, data frame, factors. 
-
-#Vector is the most common. It is a collection of elements that are most commonly of the type character, numeric, integer, and logical. 
-#We will make a vector with three numeric elements in it: 
-
-y <- c(1, 2, 3) 
-
-#OR a vector full of character elements: 
-
-z <- c("Sarah", "Tracy", "Jon") 
-
-#Exercise: 
-
-class(z) #tells us the vector are characters. 
-class(y) #tells us the vector are numbers. 
-
-#There are also lists. Unlike vectors, values inside lists can be of several different types. 
-
-x <- list(1, "a", TRUE) #the list has a number, a character, and a logical data type. 
-x #this outputs each variable on a separate line. 
-
-#####1.3.13 Data frames and tibbles##### 
-
-#Rows and Columns like excel. Each column hols elements of the same type, meaning that data in each cell in a column of a data frame need to be the same type.
-#We can import a data frame from an external file such as .csv, or.xlsx. 
-#The function data.frame lets you make them by adding together different vectors and giving each one a column name. 
-
-my_dataframe <- data.frame (no =c(1,2,3), c("tracy","jon","pete"), c(TRUE, FALSE, TRUE))
-my_dataframe
-str(my_dataframe)
-
-#R guesses the type of each column. Sometimes it gets it wrong, so it's good get into the habit of checking and changing if necessary... 
-
-my_dataframe$no = as.factor(my_dataframe$no)
-str(my_dataframe)
-#It is important that each vector is the same length (number of rows) because R won't allow you to have different columns with different lengths. 
-#This is where you can use NA in a data with no data. 
-
-#####1.3.14 Packages & Libraries##### 
-
-#Downloading R packages. 
-
-install.packages("tidyverse") #download and install. 
-library(tidyverse) #load into current workspace. 
-
-#now its downloaded and installed, its best to # it so it doesn't download and install every time you run the script. 
-
-#Now lets run a simple function from the package you installed and loaded above, ggplot2. 
-#library(ggplot2)
-
-?ggplot2 #to learn about the package. 
-
-#####1.3.15 Coding best practices##### 
-
-#Loading packages 
-
-#library(gglot2)
-#library(tidyr)
-#library(tidyverse)
-```
-
 #2.16 Load Packages and Data 
 
 ```{r}
-install.packages("knitr")
+#install.packages("knitr")
 library(knitr)
 mpg
 ```
@@ -309,8 +86,8 @@ HERE we keep the colour in the big brackets because we are changing information 
 # 2.19 Troubleshooting 
 Be careful when you're typing code, the placement of specific numbers of letters etc. matter. E.g. 
 ```{r}
-ggplot(data = mpg) 
- + geom_point(mapping = aes(x = displ, y = hwy, colour = displ < 5))
+#ggplot(data = mpg) 
+# + geom_point(mapping = aes(x = displ, y = hwy, colour = displ < 5))
 ```
 
 The above doesn't work, because the + symbol is in the wrong place. 
@@ -679,11 +456,11 @@ Sometimes, we want to do something when we don't meet a certain case. A marine e
 The code: 
 
 ```{r}
-if(animal_data_receieved){
+#if(animal_data_receieved){
   #1. save statement in log file that the animal has been updated
-} else {
+#} else {
   #1. save statment saying no data receieved
-}
+#}
 ```
 
 In addition, there is an "elseif" statement which allows you to fit in additional conditions between "if" and "else", enabling you to chain together a range of different cases for your program to move through and do certain things. 
@@ -833,22 +610,349 @@ Saving a data frame back to a .csv once you've developed it, simply use write.cs
 This is to show that programming languages are very similar. 
 
 ```{r}
-R.version.string
-#> [1] "R version 4.5.1 (2025-06-13)"
+#source("Class_1.R")
+```
 
-update.packages(ask = FALSE, checkBuilt = TRUE)
+# WORKSHOP 4 # 
+
+#4.4 Chattr (Conversational Workspace Engine)
+
+#Installing chat interfaces. 
+
+```{r}
+#install.packages("ellmer")
+#install.packages("chattr")
+
+library(ellmer)
+library(chattr)
+```
+
+#Securely storing our API Key 
+
+Run this code in console: 
+```{r}
+#usethis::edit_r_environ()
+```
+Then a new file named .Renviron will open. Add the below line (because we used Gemini): 
+GEMINI_API_KEY="your-long-api-key-here" - adding my personal API key in ""
+
+Save file and restart R session by Cmd+Shift+0. 
+
+#Connecting Chattr to Your Model 
+
+Run this code in console: 
+```{r}
+#usethis::edit_r_profile()
+```
+
+Again, a new page will open on R, called .Rprofile 
+In this page add one line... options(.chattr_chat = ellmer::chat_google_gemini())  
+Save file and restart R session by Cmd+Shift+0. 
+
+#Launching and Mapping the User Interface 
+
+To interact with the AI we have chosen, which is Google Gemini, we can run... 
+```{r}
+#chattr::chattr_app()
+```
+We added it as a shortcut by... 
+1. Tools > Modify Keyboard Shortcuts 
+2. Search Open Chat 
+3. Click inside "Shortcut" and add own shortcut... in my case i chose ctrl+o. 
+4. Click Apply 
+
+Now my chattr interface is open. When I press ctrl+o it opens in bottom right-hand corner. 
+
+Exercise: Prompting for Context 
+Question: I asked "What package would I use to create a scatterplot?" 
+Answer: library(ggplot2)
+
+#4.3 Conditional Logical - filtering your Data 
+
+Base R: if and else 
+
+```{r}
+#Simple example: Checking Sea Surface Temperature (SST) 
+sst <- 30.2
+
+if (sst>29.5) {
+  print("Warning: Marine heatwave threshold exceeded!")
+} else {
+  print("SST remains within baseline parameters.")
+}
+```
+
+#Tidyverse Alternative: Vectorised Conditionals (dplyr) 
+Using the data-wrangling package "dplyr" - if_else()
+
+#IF_ELSE 
+
+The if_else (condition, true_output, false_output) function evaluates an entire column item-by-item. 
+
+```{r}
+#Load tidyverse (if not already loaded) 
+library(tidyverse)
+
+#Sample coral data 
+coral_monitoring <- tibble(
+  site = c("Site_A", "Site B", "Site C"), 
+  depth_m = c(12, 35, 8)
+)
 ```
 
 ```{r}
-source("Class_1.R")
+#Classify depth using if_else 
+coral_monitoring <- coral_monitoring %>%
+  mutate(zone = if_else (depth_m > 30, "Deep Reef", "Shallow Reef"))
+```
+
+What does the function "mutate()" do? 
+
+```{r}
+?mutate
+```
+
+Mutate creates new columns that are functions of existing variables. It can also modify (if the name is the same as an existing column) and delete columns (by setting their value to NULL). 
+
+What is the %>% symbol? 
+
+```{r}
+?'%>%'
+```
+It passes the result on the left into the function on the right.
+It pipes an object forward into a function or call expression. 
+
+#CASE_WHEN 
+When you have more than two possibilies, stakcing multiple if-else blocks becomes unreadable. case_when() provides a clean, sequential evaluation layout using formula tildes (~): 
+
+```{r}
+coral_monitoring <- coral_monitoring %>% 
+  mutate(reef_category = case_when(
+    depth_m < 10 ~ "Lagoon /Flats", 
+    depth_m <= 30 ~ "Crest/Slope", 
+    depth_m > 30 ~ "Mesophotic / Deep", 
+    TRUE ~ "Unclassified" # Catch-all remainder 
+  ))
 ```
 
 
+```{r}
+library(tibble)
+```
+
+TASK: Environmental Stress Classification 
 
 
+```{r}
+# Create tibble and classify environment type
+marine_stations <- tibble(
+  salinity = c(35, 28, 32, 12)
+) %>%
+  mutate(
+    environment_type = case_when(
+      salinity < 15 ~ "Estuarine",
+      salinity >= 15 & salinity <= 30 ~ "Brackish",
+      salinity > 30 ~ "Marine"
+    )
+  )
 
+# Print result to verify
+print(marine_stations)
 
+# Check structure
+str(marine_stations)
+```
+#4.4 Automation - Iterating Efficiency 
+Automation means instructing R to repeat a task across multiple items without manual copy-pasting. 
 
+Base R: for-loops 
+A for-loop repeats a code chunk for each element in a designated sequence. 
 
+```{r}
+#Classic loop anatomy 
+for(year in 2020:2024){
+  print(paste("Porcessing climate data for year:", year))
+}
+```
+If we want to track real-world data, loops can iterate over file directories (e.g., reading 12 monthly turtle tracking CSVs sequentially): 
+
+```{r}
+#loop across index sequences 
+transect_lengths <- c(50, 100, 25, 75)
+
+for (i in seq_along(transect_lengths)){
+  print(paste("Transect number", i, "measures", transect_lengths[i], "meters."))
+}
+```
+
+# Tidyverse Alnernative: Functional Programming (purrr package) 
+
+While for-loops are a core programming construct, they require you to manage index variables (i) and explicitly set up empty "containers" to store results, which often leads to verbose code and hidden bugs. 
+
+map() = returns a flexible List structure 
+map_dbl() = returns a vector of decimals/numeric values 
+map_chr() = returns a vector of text strings/characters 
+map_df() = returns a combines data frame/tibble 
+
+#Comparison Example: Calculating Square Roots of Site Vectors 
+
+Look at how much cleaner functional mapping behaves compared to building a menual container loop: 
+
+Using a standard for-loop: 
+```{r}
+site_areas <- c(144, 400, 625)
+results <- numeric(length(site_areas)) #must build an empty container first 
+
+for(i in seq_along(site_areas)){
+  results[i] <- sqrt(site_areas[i])
+}
+```
+
+Using the purrr equivalent: 
+```{r}
+library(purrr)
+```
+```{r}
+#Map directly and define your expexted output type explicityly 
+mapped_results <- map_dbl(site_areas, sqrt)
+print(results)
+```
+There is no right or wrong answer. You can just choose what works best for you. 
+
+#Iterating Across Complex Groups 
+You can combine purrr pipelines seamlessly inside data frames to split analysis across separate groups: 
+
+```{r}
+#Iterate a summary function over split lists of data 
+iris %>% 
+  split(.$Species) %>% 
+  map(~summary(.x))
+```
+
+TASK: Using chattr (but I am not using chattr, I am using internet copilot)
+
+Example: 
+```{r}
+
+fish_counts <- list(
+  c(10, 15, 20),
+  c(5, 8, 12),
+  c(30, 25, 35)
+)
+```
+
+For-loop Version: 
+```{r}
+means_loop <- numeric(length(fish_counts))
+
+for (i in seq_along(fish_counts)) {
+  means_loop[i] <- mean(fish_counts[[i]])
+}
+means_loop
+```
+
+purrr version 
+```{r}
+library(purrr)
+
+means_map <- map_dbl(fish_counts, mean)
+
+means_map
+```
+
+Results: the purrr version code is much much shorter and more accurate compared to the example and for-loop version. 
+
+# Writing Custom Functions 
+Do this when you find yourself copying and pasting the exact same block of code of loop transformations. 
+
+Functional Construction Blueprint 
+A function consists of a Name, Arguments (the input variables), and a Body (the execution logic wrapped inside curly brackets). 
+
+```{r}
+#Functional Definition 
+calculate_coral_mortality <- function(initial_count, surviving_count) {
+  #Logic safety switch using our conditional tools! 
+  if(initial_count <=0) {
+    stop("Initial count must be greater than zero.")
+  }
+  mortality_rate <- (initial_count - surviving_count) / initial_count
+  return(mortality_rate)
+}
+
+calculate_coral_mortality(initial_count = 120, surviving_count = 84)
+``` 
+
+Exercise: Custom Function Construction Task 
+
+```{r}
+convert_temp_c_to_f <- function(celsius) {
+  if (celsius < -273.15) {
+    stop("Temperature cannot be below absolute zero (-273.15°C).")
+  }
+  (celsius * 9/5) + 32
+}
+# Test
+convert_temp_c_to_f(25)    # should work
+#convert_temp_c_to_f(-300)  # should error
+```
+25 degrees Celsius works... -300 degrees Celsius does not work. 
+
+#4.6 Advanced Scripting Extension Challenges 
+I copy and pasted the instructions into Copilot and copy and pasted the code they gave me, ran it and it seemed to work with no error. 
+
+```{r}
+# Load purrr
+library(purrr)
+
+# Input vectors
+counts <- c(15, 24, 8, 42)
+factors <- c(1.2, 0.8, 2.5, 1.1)
+
+# Map across both vectors simultaneously
+scaled_abundance <- map2_dbl(counts, factors, ~ .x * .y)
+
+# View result
+scaled_abundance
+```
+
+```{r}
+# Load libraries
+library(dplyr)
+library(tibble)
+
+# Define the function
+clean_and_classify_survey <- function(df, column_name, threshold) {
+  
+  # Check if column exists
+  if (!(column_name %in% names(df))) {
+    stop(paste("Error: Column", column_name, "does not exist in the data frame."))
+  }
+  
+  # Clean and classify
+  result <- df %>%
+    filter(!is.na(.data[[column_name]])) %>%   # remove NAs in specified column
+    mutate(
+      classification = if_else(
+        .data[[column_name]] >= threshold,
+        "Above threshold",
+        "Below threshold"
+      )
+    )
+  
+  # Return result (also assign to global env if needed)
+  assign("cleaned_survey", result, envir = .GlobalEnv)
+  
+  return(result)
+}
+
+#Create mock tibble with NA
+survey_data <- tibble(
+  site = c("A", "B", "C", "D"),
+  abundance = c(10, NA, 25, 5)
+)
+
+#Test function
+clean_and_classify_survey(survey_data, "abundance", 15)
+```
 
 
