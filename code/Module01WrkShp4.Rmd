@@ -15,10 +15,9 @@ knitr::opts_chunk$set(
 
 # Module 1 - Workshop 4 
 
-#4.4 Chattr (Conversational Workspace Engine)
+#### 4.4 Chattr (Conversational Workspace Engine)
 
-#Installing chat interfaces. 
-
+#### Installing chat interfaces. 
 ```{r}
 #install.packages("ellmer")
 #install.packages("chattr")
@@ -27,7 +26,7 @@ library(ellmer)
 library(chattr)
 ```
 
-#Securely storing our API Key 
+#### Securely storing our API Key 
 
 Run this code in console: 
 ```{r}
@@ -38,7 +37,7 @@ GEMINI_API_KEY="your-long-api-key-here" - adding my personal API key in ""
 
 Save file and restart R session by Cmd+Shift+0. 
 
-#Connecting Chattr to Your Model 
+#### Connecting Chattr to Your Model 
 
 Run this code in console: 
 ```{r}
@@ -49,7 +48,7 @@ Again, a new page will open on R, called .Rprofile
 In this page add one line... options(.chattr_chat = ellmer::chat_google_gemini())  
 Save file and restart R session by Cmd+Shift+0. 
 
-#Launching and Mapping the User Interface 
+#### Launching and Mapping the User Interface 
 
 To interact with the AI we have chosen, which is Google Gemini, we can run... 
 ```{r}
@@ -67,7 +66,7 @@ Exercise: Prompting for Context
 Question: I asked "What package would I use to create a scatterplot?" 
 Answer: library(ggplot2)
 
-#4.3 Conditional Logical - filtering your Data 
+#### 4.3 Conditional Logical - filtering your Data 
 
 Base R: if and else 
 
@@ -82,10 +81,10 @@ if (sst>29.5) {
 }
 ```
 
-#Tidyverse Alternative: Vectorised Conditionals (dplyr) 
+#### Tidyverse Alternative: Vectorised Conditionals (dplyr) 
 Using the data-wrangling package "dplyr" - if_else()
 
-#IF_ELSE 
+## if_else 
 
 The if_else (condition, true_output, false_output) function evaluates an entire column item-by-item. 
 
@@ -122,7 +121,7 @@ What is the %>% symbol?
 It passes the result on the left into the function on the right.
 It pipes an object forward into a function or call expression. 
 
-#CASE_WHEN 
+## case_when
 When you have more than two possibilies, stakcing multiple if-else blocks becomes unreadable. case_when() provides a clean, sequential evaluation layout using formula tildes (~): 
 
 ```{r}
@@ -140,9 +139,7 @@ coral_monitoring <- coral_monitoring %>%
 library(tibble)
 ```
 
-TASK: Environmental Stress Classification 
-
-
+# TASK: Environmental Stress Classification 
 ```{r}
 # Create tibble and classify environment type
 marine_stations <- tibble(
@@ -162,12 +159,12 @@ print(marine_stations)
 # Check structure
 str(marine_stations)
 ```
-#4.4 Automation - Iterating Efficiency 
+
+#### 4.4 Automation - Iterating Efficiency 
 Automation means instructing R to repeat a task across multiple items without manual copy-pasting. 
 
 Base R: for-loops 
 A for-loop repeats a code chunk for each element in a designated sequence. 
-
 ```{r}
 #Classic loop anatomy 
 for(year in 2020:2024){
@@ -185,7 +182,7 @@ for (i in seq_along(transect_lengths)){
 }
 ```
 
-# Tidyverse Alnernative: Functional Programming (purrr package) 
+#### Tidyverse Alnernative: Functional Programming (purrr package) 
 
 While for-loops are a core programming construct, they require you to manage index variables (i) and explicitly set up empty "containers" to store results, which often leads to verbose code and hidden bugs. 
 
@@ -194,7 +191,7 @@ map_dbl() = returns a vector of decimals/numeric values
 map_chr() = returns a vector of text strings/characters 
 map_df() = returns a combines data frame/tibble 
 
-#Comparison Example: Calculating Square Roots of Site Vectors 
+#### Comparison Example: Calculating Square Roots of Site Vectors 
 
 Look at how much cleaner functional mapping behaves compared to building a menual container loop: 
 
@@ -219,7 +216,7 @@ print(results)
 ```
 There is no right or wrong answer. You can just choose what works best for you. 
 
-#Iterating Across Complex Groups 
+#### Iterating Across Complex Groups 
 You can combine purrr pipelines seamlessly inside data frames to split analysis across separate groups: 
 
 ```{r}
@@ -262,7 +259,7 @@ means_map
 
 Results: the purrr version code is much much shorter and more accurate compared to the example and for-loop version. 
 
-# Writing Custom Functions 
+#### Writing Custom Functions 
 Do this when you find yourself copying and pasting the exact same block of code of loop transformations. 
 
 Functional Construction Blueprint 
@@ -297,7 +294,7 @@ convert_temp_c_to_f(25)    # should work
 ```
 25 degrees Celsius works... -300 degrees Celsius does not work. 
 
-#4.6 Advanced Scripting Extension Challenges 
+#### 4.6 Advanced Scripting Extension Challenges 
 I copy and pasted the instructions into Copilot and copy and pasted the code they gave me, ran it and it seemed to work with no error. 
 
 ```{r}

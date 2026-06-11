@@ -15,14 +15,9 @@ knitr::opts_chunk$set(
 
 # Module 1 - Workshop 3
 
-# 3.1.1 Learning about for-loops 
+#### 3.1.1 Learning about for-loops 
 
-R & all programming languages have a range of 'control structures that allow you to control the flow of execution of code. 
-A primitive way of doing this is with loops. Repeat a task on your data. Code looks like... 
-
-"for (value in that) {
-this 
-}"
+R & all programming languages have a range of control structures that allow you to control the flow of execution of code. A primitive way of doing this is with loops. Repeating a task on your data. 
 
 ```{r}
 for (value in c("My", "first", "for", "loop")){
@@ -48,13 +43,11 @@ We only get an output from our loop because of the 'print' function. If you look
 We will now make our own fully custom for-loop. 
 
 First - we make the object we want to loop through. Here we use a numeric vector, but it will also work with a list (we'll call it a 'list' because it helps imagine it). Print it so you know what it is: note that it's a numeric vector data structure that holds 50 numbers, which is every number from 1 to 50. 
-
 ```{r}
 my_list <- 1:50
 print(my_list) 
-str(my_list)
+str(my_list) #str() function compactly displays the internal structure of an object. 
 ```
-str() function compactly displays the internal structure of an object. 
 
 Now, we make a new for-loop for a custom purpose. We can think about it as "for each item on my list, do something to that item". 
 Here we want to access the first item, print it out, and then go on to the next item. 
@@ -62,12 +55,11 @@ Here we want to access the first item, print it out, and then go on to the next 
 i is what programmers normally use for this purpose (standing for iteration), but you can use any letter or term you like, as long as you call it again inside the for-loop. 
 
 The code will enter into a loop (defined by the curly brackets) then run round and round the loop for however many times your for-loop is looping over. This one runs 50 times, goes to number 1, prints it, goes to number 2, prints it, and so on... 
-
 ```{r}
 #make a for-loop 
 for(i in my_list){
   result <- i 
-  out <- paste0("I am printing loop number: ",i,".") #output: 1 loop 
+  out <- paste("I am printing loop number: ",i,".") #output: 1 loop 
   print(out)
   #Sys.sleep(0.5) #slow it down for example purposes
 }
@@ -76,12 +68,11 @@ print("For loop complete!")
 print("Program complete!")
 ```
 Now we increase the complexity a little. Here we want to add a number constant to every item in the list
-
 ```{r}
 add_me <- 500
 for(i in my_list){
   result <- i + add_me #add to the i value 
-  out <- paste0("Result of iteration: ",i,"=", result, ".")
+  out <- paste("Result of iteration: ",i,"=", result, ".")
   print(out)
   #Sys.sleep(0.5) #comment out to show just how fast R is. 
 }
@@ -104,7 +95,6 @@ for(i in c(1, 2, 3, 4, 5)) {
 }
 ```
 I will now make my own for-loop. 
-
 ```{r}
 my_animal_list <- 1:3
 print(my_animal_list) 
@@ -121,7 +111,7 @@ for(a in my_animal_list){
   }
 ```
 
-# 3.1.2 if and if else statements 
+#### 3.1.2 if and if else statements 
 
 if (no_milk){
 buy_milk
@@ -151,7 +141,6 @@ TRUE
 Sometimes, we want to do something when we don't meet a certain case. A marine example of this is to format tracking tag data if there is some data received, but skip the file if no data is received (e.g. the animal is underwater). Here we use the "ifelse" statement, which allows you to start a second set of commands if the first condition is not met. 
 
 The code: 
-
 ```{r}
 #if(animal_data_receieved){
   #1. save statement in log file that the animal has been updated
@@ -182,7 +171,7 @@ if (name == "Caterina") {
 print(paste(name, last.name))
 ```
 
-When I change the first name <- Bob, it works. When i change the second name Bob, it doesnt. 
+When I change the first name <- Bob, it works. When i change the second name Bob, it doesn't. 
 
 ```{r}
 name <- "Caterina"
@@ -219,7 +208,7 @@ print(paste(name, last.name))
 
 The above is saying, if Caterina is Palma, and Bob is Jones, then Jim is ...last name unknown. 
 
-# 3.1.3 Functions 
+#### 3.1.3 Functions 
 
 We just got introduced to control structures such as "if else" statements and "for loops". 
 But, if we want to do the same thing over and over again in our script, we use a FUNCTION! 
@@ -240,7 +229,7 @@ temp_C <-(200 - 32) * 5/9
 
 The number comes up in our environment box (top right-hand corner). 
 
-BUT, what if we have a data file where we need to repeatedly make this conversion over hundreds or thousands of sites? Having to include the full equation every time makes for a lot of writing, a big chance of accidently including an error, and difficult to read script. 
+BUT, what if we have a data file where we need to repeatedly make this conversion over hundreds or thousands of sites? Having to include the full equation every time makes for a lot of writing, a big chance of accidentally including an error, and difficult to read script. 
 
 Here, we can turn this into a function... 
 
@@ -294,7 +283,7 @@ Now to test...
 celsuis_to_fahrenheit(40)
 ```
 
-# 3.1.5 Importing and Saving Data 
+#### 3.1.5 Importing and Saving Data 
 
 You can download your own data into R as a data frame very easily. 
 Generally, we prefer data to be in a comma separated file (.csv) rather than excel (.xls) because .csv's are plain text files that are well structured and easy for R to deal with. 
@@ -303,7 +292,7 @@ RStudio has drop down menus and methods to import data into an R session. Howeve
 
 Saving a data frame back to a .csv once you've developed it, simply use write.csv. 
 
-# 3.1.6 Which programming language should I learn? Python vs. R 
+#### 3.1.6 Which programming language should I learn? Python vs. R 
 This is to show that programming languages are very similar. 
 
 ```{r}
