@@ -1,0 +1,311 @@
+---
+title: "Module01WrkShp3"
+author: "Caterina"
+date: "2026-06-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  include = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+# Module 1 - Workshop 3
+
+# 3.1.1 Learning about for-loops 
+
+R & all programming languages have a range of 'control structures that allow you to control the flow of execution of code. 
+A primitive way of doing this is with loops. Repeat a task on your data. Code looks like... 
+
+"for (value in that) {
+this 
+}"
+
+```{r}
+for (value in c("My", "first", "for", "loop")){
+  print("one run")
+}
+```
+The above printed what we put in the brackets after print i.e. "one run". 
+
+```{r}
+for (value in c("My", "second", "for", "loop")){
+  print(value)
+}
+```
+But, when we put any word, for example 'value' in the top line, when we ask to print 'value', R will print the words on the first line, as we have asked. Examples are below and above. 
+
+```{r}
+for (word in c("My", "second", "for", "loop")){
+  print(word)
+}
+```
+We only get an output from our loop because of the 'print' function. If you look to the environment box (top right) you will see the words 'value' and 'word' are loops. 
+
+We will now make our own fully custom for-loop. 
+
+First - we make the object we want to loop through. Here we use a numeric vector, but it will also work with a list (we'll call it a 'list' because it helps imagine it). Print it so you know what it is: note that it's a numeric vector data structure that holds 50 numbers, which is every number from 1 to 50. 
+
+```{r}
+my_list <- 1:50
+print(my_list) 
+str(my_list)
+```
+str() function compactly displays the internal structure of an object. 
+
+Now, we make a new for-loop for a custom purpose. We can think about it as "for each item on my list, do something to that item". 
+Here we want to access the first item, print it out, and then go on to the next item. 
+
+i is what programmers normally use for this purpose (standing for iteration), but you can use any letter or term you like, as long as you call it again inside the for-loop. 
+
+The code will enter into a loop (defined by the curly brackets) then run round and round the loop for however many times your for-loop is looping over. This one runs 50 times, goes to number 1, prints it, goes to number 2, prints it, and so on... 
+
+```{r}
+#make a for-loop 
+for(i in my_list){
+  result <- i 
+  out <- paste0("I am printing loop number: ",i,".") #output: 1 loop 
+  print(out)
+  #Sys.sleep(0.5) #slow it down for example purposes
+}
+
+print("For loop complete!")
+print("Program complete!")
+```
+Now we increase the complexity a little. Here we want to add a number constant to every item in the list
+
+```{r}
+add_me <- 500
+for(i in my_list){
+  result <- i + add_me #add to the i value 
+  out <- paste0("Result of iteration: ",i,"=", result, ".")
+  print(out)
+  #Sys.sleep(0.5) #comment out to show just how fast R is. 
+}
+
+print("For loop complete!")
+print("Program complete!")
+```
+Now, imagine if you had something very complex to do, like take a data file, extract a value from it, add it to another one and so on. Using this type of functionality of programming language, iterating with little or no input, will ultimately allow you to do incredible things to your data or files. 
+
+Nested for-loop. 
+```{r}
+#Note we have i and j for each loop 
+for(i in c(1, 2, 3, 4, 5)) {
+  print (paste ("I am base loop number: ",i))
+  #Sys.sleep(0.8) #slow it down for example purposes 
+  for (j in c(1, 2, 3)){
+    print (paste ("...I am inside loop number: ",j))
+    #Sys.sleep(0.8) # slow it down for example purposes
+  }
+}
+```
+I will now make my own for-loop. 
+
+```{r}
+my_animal_list <- 1:3
+print(my_animal_list) 
+```
+
+```{r}
+animals <- c("cat", "whale", "shark")
+```
+
+```{r}
+for(a in my_animal_list){
+  out <- paste("My number",a,"favourite animal is a", animals[a],".")
+  print(out)
+  }
+```
+
+# 3.1.2 if and if else statements 
+
+if (no_milk){
+buy_milk
+}
+
+First we tell the code that x is 1. Then we say, if x is 1 then x is 2. Similar to the example above, that says is there is no milk, buy milk. So, now R knows that x is 2. 
+```{r}
+x <- 1 
+x #what is x? 
+if (x == 1) {
+  x <- 2
+  x #what is x now? 
+}
+```
+The below checks to see what x is. We're asking does x = 1 or does x = 2, and we get a TRUE or FALSE answer. 
+
+```{r}
+x == 1
+```
+FALSE
+
+```{r}
+x == 2
+```
+TRUE 
+
+Sometimes, we want to do something when we don't meet a certain case. A marine example of this is to format tracking tag data if there is some data received, but skip the file if no data is received (e.g. the animal is underwater). Here we use the "ifelse" statement, which allows you to start a second set of commands if the first condition is not met. 
+
+The code: 
+
+```{r}
+#if(animal_data_receieved){
+  #1. save statement in log file that the animal has been updated
+#} else {
+  #1. save statment saying no data receieved
+#}
+```
+
+In addition, there is an "elseif" statement which allows you to fit in additional conditions between "if" and "else", enabling you to chain together a range of different cases for your program to move through and do certain things. 
+
+Exercise 
+
+```{r}
+name <- "Caterina"
+if (name == "Caterina") {
+  last.name <- "Palma"
+}
+print(paste(name, last.name))
+```
+
+try changing name to Bob, what happens? 
+
+```{r}
+name <- "Bob"
+if (name == "Caterina") {
+  last.name <- "Palma"
+}
+print(paste(name, last.name))
+```
+
+When I change the first name <- Bob, it works. When i change the second name Bob, it doesnt. 
+
+```{r}
+name <- "Caterina"
+if (name == "Bob") {
+  last.name <- "Palma"
+}
+print(paste(name, last.name))
+```
+
+Now we use else... 
+
+```{r}
+name <- "Bob"
+if (name == "Caterina") {
+  last.name <- "Palma"
+} else {
+  last.name <- "Smith"
+}
+print(paste(name, last.name))
+```
+The above is saying, when the name is Caterina, then the last name is Palma, but if the name is anything else then the last name is Smith. 
+
+```{r}
+name <- "Jim"
+if (name == "Caterina") {
+  last.name <- "Palma"
+} else if (name == "Bob") {
+  last.name <- "Jones"
+} else {
+  last.name <- "... last name is unknown"
+}
+print(paste(name, last.name))
+```
+
+The above is saying, if Caterina is Palma, and Bob is Jones, then Jim is ...last name unknown. 
+
+# 3.1.3 Functions 
+
+We just got introduced to control structures such as "if else" statements and "for loops". 
+But, if we want to do the same thing over and over again in our script, we use a FUNCTION! 
+It makes everything shorter and neater, and saves us from writing long code over and over. 
+
+Let's use a classic problem of wanting to convert temperature. To calculate celcuis from fahrenheit, it's a simple equation. 
+
+```{r}
+#temp_c <- (temp_F -32)* 5/9
+```
+
+If we want to calculate temperature in celcuis of two places, one which is 100F and the other which is 200F, I could write... 
+
+```{r}
+temp_C <-(100 - 32) * 5/9 
+temp_C <-(200 - 32) * 5/9 
+```
+
+The number comes up in our environment box (top right-hand corner). 
+
+BUT, what if we have a data file where we need to repeatedly make this conversion over hundreds or thousands of sites? Having to include the full equation every time makes for a lot of writing, a big chance of accidently including an error, and difficult to read script. 
+
+Here, we can turn this into a function... 
+
+```{r}
+fahrenheit_to_celsuis <- function(temp_F) {
+  temp_C <- (temp_F - 32) *5/9 
+  return(temp_C)
+}
+```
+
+The function is called "fahrenheit_to_celcuis", and is defined by assigning the output of 'function'. The list of argument names are contained within parentheses. Arguments are the object we want our function to operate on. In this case, it will be a number which represents temperature in fahrenheit (temp_F). 
+
+Next, the 'body' of the function, which is the code that will be executed when the function is run, is contained within curly brackets. The return function gives us back the result. 
+
+```{r}
+fahrenheit_to_celsuis <- function(temp_F) {
+  #convert F to C
+  temp_C <- (temp_F - 32) *5/9 
+  return(temp_C)
+}
+```
+
+Adding in the # to comment. 
+
+We use the function name "fehrenheit_to_celsuis()" putting a number in the brackets, and R provides us with the answer using the equation we put in the function when we made it earlier/above. 
+
+```{r}
+fahrenheit_to_celsuis(100) 
+```
+
+```{r}
+fahrenheit_to_celsuis(200) 
+```
+
+As we change the number of fahrenheit in the (), the value of temp_C changes, you can see this in the environment box (top right-hand corner). This saves a lot of space with the script. 
+Using functions for repeated tasks can dramatically improve your coding style and lead to readable, easy to understand code. 
+
+Exercise - Write a function that converts Celsuis to Fahrenheit... 
+
+```{r}
+celsuis_to_fahrenheit <- function(temp_C) {
+  #convert C to F
+  temp_F <- (temp_C * 9/5) + 32
+  return(temp_F)
+}
+```
+
+Now to test... 
+
+```{r}
+celsuis_to_fahrenheit(40)
+```
+
+# 3.1.5 Importing and Saving Data 
+
+You can download your own data into R as a data frame very easily. 
+Generally, we prefer data to be in a comma separated file (.csv) rather than excel (.xls) because .csv's are plain text files that are well structured and easy for R to deal with. 
+
+RStudio has drop down menus and methods to import data into an R session. However, we'll hard-code these types of actions using the base function read.csv, so that it's easier to re-run your script in the future. 
+
+Saving a data frame back to a .csv once you've developed it, simply use write.csv. 
+
+# 3.1.6 Which programming language should I learn? Python vs. R 
+This is to show that programming languages are very similar. 
+
+```{r}
+#source("Class_1.R")
+```

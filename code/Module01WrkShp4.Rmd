@@ -1,0 +1,356 @@
+---
+title: "Module01WrkShp4"
+author: "Caterina"
+date: "2026-06-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  include = TRUE,
+  message = FALSE,
+  warning = FALSE)
+```
+
+# Module 1 - Workshop 4 
+
+#4.4 Chattr (Conversational Workspace Engine)
+
+#Installing chat interfaces. 
+
+```{r}
+#install.packages("ellmer")
+#install.packages("chattr")
+
+library(ellmer)
+library(chattr)
+```
+
+#Securely storing our API Key 
+
+Run this code in console: 
+```{r}
+#usethis::edit_r_environ()
+```
+Then a new file named .Renviron will open. Add the below line (because we used Gemini): 
+GEMINI_API_KEY="your-long-api-key-here" - adding my personal API key in ""
+
+Save file and restart R session by Cmd+Shift+0. 
+
+#Connecting Chattr to Your Model 
+
+Run this code in console: 
+```{r}
+#usethis::edit_r_profile()
+```
+
+Again, a new page will open on R, called .Rprofile 
+In this page add one line... options(.chattr_chat = ellmer::chat_google_gemini())  
+Save file and restart R session by Cmd+Shift+0. 
+
+#Launching and Mapping the User Interface 
+
+To interact with the AI we have chosen, which is Google Gemini, we can run... 
+```{r}
+#chattr::chattr_app()
+```
+We added it as a shortcut by... 
+1. Tools > Modify Keyboard Shortcuts 
+2. Search Open Chat 
+3. Click inside "Shortcut" and add own shortcut... in my case i chose ctrl+o. 
+4. Click Apply 
+
+Now my chattr interface is open. When I press ctrl+o it opens in bottom right-hand corner. 
+
+Exercise: Prompting for Context 
+Question: I asked "What package would I use to create a scatterplot?" 
+Answer: library(ggplot2)
+
+#4.3 Conditional Logical - filtering your Data 
+
+Base R: if and else 
+
+```{r}
+#Simple example: Checking Sea Surface Temperature (SST) 
+sst <- 30.2
+
+if (sst>29.5) {
+  print("Warning: Marine heatwave threshold exceeded!")
+} else {
+  print("SST remains within baseline parameters.")
+}
+```
+
+#Tidyverse Alternative: Vectorised Conditionals (dplyr) 
+Using the data-wrangling package "dplyr" - if_else()
+
+#IF_ELSE 
+
+The if_else (condition, true_output, false_output) function evaluates an entire column item-by-item. 
+
+```{r}
+#Load tidyverse (if not already loaded) 
+library(tidyverse)
+
+#Sample coral data 
+coral_monitoring <- tibble(
+  site = c("Site_A", "Site B", "Site C"), 
+  depth_m = c(12, 35, 8)
+)
+```
+
+```{r}
+#Classify depth using if_else 
+coral_monitoring <- coral_monitoring %>%
+  mutate(zone = if_else (depth_m > 30, "Deep Reef", "Shallow Reef"))
+```
+
+What does the function "mutate()" do? 
+
+```{r}
+?mutate
+```
+
+Mutate creates new columns that are functions of existing variables. It can also modify (if the name is the same as an existing column) and delete columns (by setting their value to NULL). 
+
+What is the %>% symbol? 
+
+```{r}
+?'%>%'
+```
+It passes the result on the left into the function on the right.
+It pipes an object forward into a function or call expression. 
+
+#CASE_WHEN 
+When you have more than two possibilies, stakcing multiple if-else blocks becomes unreadable. case_when() provides a clean, sequential evaluation layout using formula tildes (~): 
+
+```{r}
+coral_monitoring <- coral_monitoring %>% 
+  mutate(reef_category = case_when(
+    depth_m < 10 ~ "Lagoon /Flats", 
+    depth_m <= 30 ~ "Crest/Slope", 
+    depth_m > 30 ~ "Mesophotic / Deep", 
+    TRUE ~ "Unclassified" # Catch-all remainder 
+  ))
+```
+
+
+```{r}
+library(tibble)
+```
+
+TASK: Environmental Stress Classification 
+
+
+```{r}
+# Create tibble and classify environment type
+marine_stations <- tibble(
+  salinity = c(35, 28, 32, 12)
+) %>%
+  mutate(
+    environment_type = case_when(
+      salinity < 15 ~ "Estuarine",
+      salinity >= 15 & salinity <= 30 ~ "Brackish",
+      salinity > 30 ~ "Marine"
+    )
+  )
+
+# Print result to verify
+print(marine_stations)
+
+# Check structure
+str(marine_stations)
+```
+#4.4 Automation - Iterating Efficiency 
+Automation means instructing R to repeat a task across multiple items without manual copy-pasting. 
+
+Base R: for-loops 
+A for-loop repeats a code chunk for each element in a designated sequence. 
+
+```{r}
+#Classic loop anatomy 
+for(year in 2020:2024){
+  print(paste("Porcessing climate data for year:", year))
+}
+```
+If we want to track real-world data, loops can iterate over file directories (e.g., reading 12 monthly turtle tracking CSVs sequentially): 
+
+```{r}
+#loop across index sequences 
+transect_lengths <- c(50, 100, 25, 75)
+
+for (i in seq_along(transect_lengths)){
+  print(paste("Transect number", i, "measures", transect_lengths[i], "meters."))
+}
+```
+
+# Tidyverse Alnernative: Functional Programming (purrr package) 
+
+While for-loops are a core programming construct, they require you to manage index variables (i) and explicitly set up empty "containers" to store results, which often leads to verbose code and hidden bugs. 
+
+map() = returns a flexible List structure 
+map_dbl() = returns a vector of decimals/numeric values 
+map_chr() = returns a vector of text strings/characters 
+map_df() = returns a combines data frame/tibble 
+
+#Comparison Example: Calculating Square Roots of Site Vectors 
+
+Look at how much cleaner functional mapping behaves compared to building a menual container loop: 
+
+Using a standard for-loop: 
+```{r}
+site_areas <- c(144, 400, 625)
+results <- numeric(length(site_areas)) #must build an empty container first 
+
+for(i in seq_along(site_areas)){
+  results[i] <- sqrt(site_areas[i])
+}
+```
+
+Using the purrr equivalent: 
+```{r}
+library(purrr)
+```
+```{r}
+#Map directly and define your expexted output type explicityly 
+mapped_results <- map_dbl(site_areas, sqrt)
+print(results)
+```
+There is no right or wrong answer. You can just choose what works best for you. 
+
+#Iterating Across Complex Groups 
+You can combine purrr pipelines seamlessly inside data frames to split analysis across separate groups: 
+
+```{r}
+#Iterate a summary function over split lists of data 
+iris %>% 
+  split(.$Species) %>% 
+  map(~summary(.x))
+```
+
+TASK: Using chattr (but I am not using chattr, I am using internet copilot)
+
+Example: 
+```{r}
+
+fish_counts <- list(
+  c(10, 15, 20),
+  c(5, 8, 12),
+  c(30, 25, 35)
+)
+```
+
+For-loop Version: 
+```{r}
+means_loop <- numeric(length(fish_counts))
+
+for (i in seq_along(fish_counts)) {
+  means_loop[i] <- mean(fish_counts[[i]])
+}
+means_loop
+```
+
+purrr version 
+```{r}
+library(purrr)
+
+means_map <- map_dbl(fish_counts, mean)
+
+means_map
+```
+
+Results: the purrr version code is much much shorter and more accurate compared to the example and for-loop version. 
+
+# Writing Custom Functions 
+Do this when you find yourself copying and pasting the exact same block of code of loop transformations. 
+
+Functional Construction Blueprint 
+A function consists of a Name, Arguments (the input variables), and a Body (the execution logic wrapped inside curly brackets). 
+
+```{r}
+#Functional Definition 
+calculate_coral_mortality <- function(initial_count, surviving_count) {
+  #Logic safety switch using our conditional tools! 
+  if(initial_count <=0) {
+    stop("Initial count must be greater than zero.")
+  }
+  mortality_rate <- (initial_count - surviving_count) / initial_count
+  return(mortality_rate)
+}
+
+calculate_coral_mortality(initial_count = 120, surviving_count = 84)
+``` 
+
+Exercise: Custom Function Construction Task 
+
+```{r}
+convert_temp_c_to_f <- function(celsius) {
+  if (celsius < -273.15) {
+    stop("Temperature cannot be below absolute zero (-273.15°C).")
+  }
+  (celsius * 9/5) + 32
+}
+# Test
+convert_temp_c_to_f(25)    # should work
+#convert_temp_c_to_f(-300)  # should error
+```
+25 degrees Celsius works... -300 degrees Celsius does not work. 
+
+#4.6 Advanced Scripting Extension Challenges 
+I copy and pasted the instructions into Copilot and copy and pasted the code they gave me, ran it and it seemed to work with no error. 
+
+```{r}
+# Load purrr
+library(purrr)
+
+# Input vectors
+counts <- c(15, 24, 8, 42)
+factors <- c(1.2, 0.8, 2.5, 1.1)
+
+# Map across both vectors simultaneously
+scaled_abundance <- map2_dbl(counts, factors, ~ .x * .y)
+
+# View result
+scaled_abundance
+```
+
+```{r}
+# Load libraries
+library(dplyr)
+library(tibble)
+
+# Define the function
+clean_and_classify_survey <- function(df, column_name, threshold) {
+  
+  # Check if column exists
+  if (!(column_name %in% names(df))) {
+    stop(paste("Error: Column", column_name, "does not exist in the data frame."))
+  }
+  
+  # Clean and classify
+  result <- df %>%
+    filter(!is.na(.data[[column_name]])) %>%   # remove NAs in specified column
+    mutate(
+      classification = if_else(
+        .data[[column_name]] >= threshold,
+        "Above threshold",
+        "Below threshold"
+      )
+    )
+  
+  # Return result (also assign to global env if needed)
+  assign("cleaned_survey", result, envir = .GlobalEnv)
+  
+  return(result)
+}
+
+#Create mock tibble with NA
+survey_data <- tibble(
+  site = c("A", "B", "C", "D"),
+  abundance = c(10, NA, 25, 5)
+)
+
+#Test function
+clean_and_classify_survey(survey_data, "abundance", 15)
+```
