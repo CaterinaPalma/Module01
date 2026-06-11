@@ -1,1 +1,3 @@
-We are creating a README to practice pushing and pulling. 
+What is Module01 all about...? 
+
+This is where we... 
