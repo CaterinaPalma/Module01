@@ -10,6 +10,7 @@ Workshop 1: Basics
 - packages and data types 
 
 Workshop 2: Visualisations 
+
 This workshop was all about visualisations aka, using all the data collected and making graphs and plots! This is an important part of science communication, being able to take large messy datasets and turn them into an easy-to-read, colourful visual (graph, plot). 
 We used the package ggplot2 to create our vidualisations, changing colours and shapes and using different lines of data to create a more suitable graph to represent the data. 
 
