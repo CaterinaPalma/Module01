@@ -1,11 +1,11 @@
 ---
-title: "Module01"
+title: "Module01 Introduction to Programming"
 author: "Caterina"
 date: "2026-05-20"
 output: html_document
 ---
 
-# Module 1 - Workshop 2
+# Workshop 2
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
@@ -35,6 +35,7 @@ This is the template to build a graph...
 ggplot(data = <YOUR_DATA>) +
 <GEOM_FUNCTION>(mapping = aes(<YOUR_MAPPINGS>)) 
 
+
 #### 2.17 Create the first ggplot2
 ```{r}
 ggplot(data = mpg) +
@@ -54,21 +55,27 @@ BUT... instead of coordinating by class, we can do it by size...
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, size = class))
 ```
+
 This isn't a great looking graph, can't really see the sizes of the points. 
-So, we are going to change the class to alpha and see what that looks like... 
+So, we are going to change the class to alpha and see what that looks like...
+
 ```{r}
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, alpha = class))
 ```
+
 Again, we aren't really able to see the difference between class of car. 
 So, we try something different. We will try shape. 
+
 ```{r}
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, shape = class))
 ```
+
 This also doesn't work very well because the program can only do a maximum of 6 different shapes, and we have 7. 
 
 Now we will ask R to make the points on the graph all blue. Remember, the code looks different, be careful. 
+
 ```{r}
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy), colour = "blue")
@@ -78,6 +85,7 @@ ggplot(data = mpg) +
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, colour = displ < 5))
 ```
+
 HERE we keep the colour in the big brackets because we are changing information within the aesthetics, rather than the whole graph. 
 
 #### 2.19 Troubleshooting 
@@ -95,19 +103,25 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy)) +
   facet_wrap(~class, nrow = 2)
 ```
+
 We will now use facet_grid if we want to use more than one variable, using ~ to split them. 
+
 ```{r}
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy)) +
   facet_grid(drv ~ cyl)
 ```
+
 We will now only split into 1 variable. To do this, we use full stop. 
+
 ```{r}
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, colour = drv)) +
   facet_grid(. ~ cyl)
 ```
+
 Read facet_wrap using below code. 
+
 ```{r}
 ?facet_wrap
 ```
@@ -118,58 +132,78 @@ ggplot can use a variety of visual objects to represent our data, including bar 
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy))
 ```
+
 We will now plot a smooth line using geom_smooth(). We have also changes the colour of the line to red. 
+
 ```{r}
 ggplot(data = mpg) +
   geom_smooth(mapping = aes(x = displ, y = hwy), colour = "red") 
 ```
+
 We can also change the line type. 
+
 ```{r}
 ggplot(data = mpg) +
   geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv), colour = "blue")
 ```
+
 And then we can change the colour of the line by adding colour = drv. 
+
 ```{r}
 ggplot(data = mpg) +
   geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv, colour = drv))
 ```
+
 Now, we will group the categories using the group aesthetic. 
+
 ```{r}
 ggplot(data = mpg) +
   geom_smooth(mapping = aes(x = displ, y = hwy, group = drv))
 ```
+
 All the lines are the same colour (blue), but we can change the colour based on drv value. 
+
 ```{r}
 ggplot(data = mpg) +
   geom_smooth(mapping = aes(x = displ, y = hwy, colour = drv), 
               show.legend = FALSE,)
 ```
+
 We will now increase complexity, by plotting multiple geoms on a single plot, by adding them together. 
+
 ```{r}
 ggplot(data = mpg) +
   geom_smooth(mapping = aes(x = displ, y = hwy), colour = "black") +
   geom_point(mapping = aes(x = displ, y = hwy, colour = drv))
 ```
+
 In the above code, we had to duplicate the line, to save time, we can do the below code. 
+
 ```{r}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
   geom_point() +
   geom_smooth()
 ```
+
 We will now class the points by class, so each class will have a separate colour. 
+
 ```{r}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
   geom_point(mapping = aes(colour = class)) +
   geom_smooth()
 ```
+
 The same goes if you want to specify different data for each layer. We will now use a filter (class = "subcompact") to select a subject of the data and plot only that subset. 
+
 ```{r}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
   geom_point(mapping = aes(colour = class)) +
   geom_smooth(data = filter(mpg, class == "subcompact"), se = FALSE)
 ```
+
 This was a test to our knowledge, to see what graphs would be made using both the below code. 
 It creates the same graph. 
+
 ```{r}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
 geom_point() +
@@ -179,6 +213,7 @@ ggplot() +
 geom_point(data = mpg, mapping = aes(x = displ, y = hwy)) +
 geom_smooth(data = mpg, mapping = aes(x = displ, y = hwy))
 ```
+
 # Diamond Data 
 
 #### 2.22.1 Transformations and Stats - Using Diamonds 
@@ -186,14 +221,17 @@ geom_smooth(data = mpg, mapping = aes(x = displ, y = hwy))
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut))
 ```
+
 You can see that we didn't add count into the variables, because there is no variable for count. But, R will count all the entries by itself, via geom_bar. Although, we can use stat_count interchangeably with geom_bar - it does the same thing. 
 The main reason for this is because every geom has a default stat and every stat has a default geom. 
+
 ```{r}
 ggplot(data = diamonds) + 
   stat_count(mapping = aes(x = cut))
 ```
 
 #### 2.22.2 Overriding Defaults in ggplot2 
+
 ```{r}
 demo <- tribble(
   ~cut, ~freq,
@@ -207,7 +245,9 @@ demo
 ggplot(data = demo) + 
   geom_bar(mapping = aes(x = cut, y = freq), stat = "identity")
 ```
+
 Here we are overriding mapping from transformed variables to aesthetics. 
+
 ```{r}
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, y = after_stat(prop), group = 1))
@@ -236,12 +276,15 @@ ggplot(data = diamonds) +
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = cut))
 ```
+
 Now using aesthetics to colour by another variable... clarity. Notice how stacking is done automatically. 
 This is done behind the scenes with a position argument. 
+
 ```{r}
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = clarity))
 ```
+
 The ability to make position adjustments is vital, it allows to customize plots in three ways, identity (raw data), fill (changes heights), and dodge (which forces ggplot2 to not put things on top of each other). 
 
 Using 'position = "identity"' enable us to place each object exactly where it falls in the context of the graph. It is vital for point charts like scatter plots but makes a mess in a bar plot situation. 
@@ -251,23 +294,30 @@ Using 'position = "identity"' enable us to place each object exactly where it fa
 ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity)) + 
   geom_bar(alpha = 1/5, position = "identity")
 ```
+
 Here we are making making the fill = NA (no colour fill). 
 ```{r}
 # To colour the bar outlines with no fill colour. 
 ggplot(data = diamonds, mapping = aes(x = cut, colour = clarity)) +
   geom_bar(fill = NA, position = "identity")
 ```
+
 The position "fill" works like stacking, but makes each set of stacked bars the same height. 
+
 ```{r}
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill") 
 ```
+
 The position "dodge" places overlapping objects directly beside one another. 
+
 ```{r}
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge") 
 ```
+
 The position "jitter" slightly moves points so you can see them all. 
+
 ```{r}
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = clarity), position = "jitter") 
@@ -277,7 +327,9 @@ ggplot(data = diamonds) +
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy), position = "jitter") 
 ```
+
 #### 2.24 The Layered Grammar of Graphics 
+
 Template for making a ggplot. 
 ```{r}
 #ggplot(data = <DATA>) + 
