@@ -1,6 +1,6 @@
-# Module 1 Workshop 1 
+# Module 1: Introduciton to Programming 
 
-This Module01 is an introduction to R. Opening the program and beginning to understand the features and languages. 
+This Module 1 is an introduction to R. Opening the program and beginning to understand the features and languages. 
 
 In this module we had 4 workshops, starting from the basics i.e. how to use R as a simple calculator and common syntax errors. 
 
