@@ -1,4 +1,4 @@
-# Module 1: Introduciton to Programming 
+# Module 1: Introduction to Programming 
 
 This Module 1 is an introduction to R. Opening the program and beginning to understand the features and languages. 
 
